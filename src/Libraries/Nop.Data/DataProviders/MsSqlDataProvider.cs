@@ -5,6 +5,8 @@ using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
 using Microsoft.Data.SqlClient;
 using Nop.Core;
+using Nop.Data.DataProviders.LinqToDb;
+using Nop.Data.DataProviders.LinqToDB;
 using Nop.Data.Mapping;
 
 namespace Nop.Data.DataProviders;
@@ -14,6 +16,12 @@ namespace Nop.Data.DataProviders;
 /// </summary>
 public partial class MsSqlNopDataProvider : BaseDataProvider, INopDataProvider
 {
+    #region Fields
+
+    protected static readonly Lazy<IDataProvider> _dataProvider = new(static () => new LinqToDbSqlServerProvider(), true);
+
+    #endregion
+
     #region Utilities
 
     /// <summary>
@@ -346,7 +354,7 @@ public partial class MsSqlNopDataProvider : BaseDataProvider, INopDataProvider
     /// <summary>
     /// Sql server data provider
     /// </summary>
-    protected override IDataProvider LinqToDbDataProvider => SqlServerTools.GetDataProvider(SqlServerVersion.v2012, SqlServerProvider.MicrosoftDataSqlClient);
+    protected override IDataProvider LinqToDbDataProvider => _dataProvider.Value;
 
     /// <summary>
     /// Gets allowed a limit input value of the data for hashing functions, returns 0 if not limited

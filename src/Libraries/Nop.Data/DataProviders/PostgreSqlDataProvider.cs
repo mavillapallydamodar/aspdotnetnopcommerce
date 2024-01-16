@@ -16,7 +16,7 @@ public partial class PostgreSqlDataProvider : BaseDataProvider, INopDataProvider
 {
     #region Fields
 
-    protected static readonly Lazy<IDataProvider> _dataProvider = new(() => new LinqToDBPostgreSQLDataProvider(), true);
+    protected static readonly Lazy<IDataProvider> _dataProvider = new(static () => new LinqToDBPostgreSQLDataProvider(), true);
 
     #endregion
 
